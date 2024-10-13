@@ -21,20 +21,26 @@
                 <div class="data">
                     <div class="atom">inc</div>
                     <div class="atom">n</div>
+                    <span>　</span>
                 </div>
                 <div class="data">
                     <div class="atom">+</div>
                     <div class="atom">n</div>
                     <div class="atom">1</div>
+                    <span>　</span>
                 </div>
             </div>
             <div class="list">
                 <div class="atom">inc</div>
                 <div class="atom">5</div>
+                <span>　</span>
             </div>
-        </div><br>
+            <span>　</span>
+        </div>
+        <br>
 
-        <p id="result"></p>
+        <span style="font-size: 100px">↪︎</span>
+        <pre id="result"> </pre>
     </body>
 
     <script>
@@ -82,7 +88,7 @@
     </script>
 
     <style>
-        #result, button, .list, .atom, .data, h1, #title {
+        #result, button, .list, .atom, .data, h1, #title, #editor  {
             display: inline-block;
             border-radius: 10px;
             padding: 10px;
@@ -95,11 +101,17 @@
             background-color: lightblue;
         }
         #title h1 {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             margin-right: 81vw;
             padding-top: -5px;
             padding-bottom: 5px;
             height: 50px;
         }
+
+        span, #title h1  {
+            color: darkslategrey;
+        }
+
         #title button {
             padding: 0;
             margin: 0;
@@ -112,14 +124,22 @@
         body {
             font-family: monospace;
             font-size: large;
+            margin: 2vh;
+            user-select: none;
         }
 
         #editor {
+            margin-top: 20px;
+            margin-bottom: 10px;
             padding: 30px;
         }
 
         #result {
-            height: 20vh;
+            padding-left: 50px;
+            padding-right: 50px;
+            padding-top: 30px;
+            padding-bottom: 30px;
+
             background-color: lightgray;
             border: 1px solid black;
         }
