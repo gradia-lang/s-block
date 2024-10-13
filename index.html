@@ -9,7 +9,10 @@
     </head>
 
     <body>
-        <h1>Lolisp</h1>
+        <div id="title">
+            <h1>Lolisp</h1>
+            <button onclick="run_lolisp()">Run</button>
+        </div>
         
 
         <div id="editor" contenteditable="true">
@@ -31,7 +34,6 @@
             </div>
         </div><br>
 
-        <button onclick="run_lolisp()">Run</button>
         <p id="result"></p>
     </body>
 
@@ -80,6 +82,33 @@
     </script>
 
     <style>
+        #result, button, .list, .atom, .data, h1, #title {
+            display: inline-block;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 2px;
+        }
+
+        #title {
+            width: 97vw;
+            align-items: center;
+            background-color: lightblue;
+        }
+        #title h1 {
+            margin-right: 81vw;
+            padding-top: -5px;
+            padding-bottom: 5px;
+            height: 50px;
+        }
+        #title button {
+            padding: 0;
+            margin: 0;
+            height: 50px;
+            width: 100px;
+
+            border: 1px solid black;
+        }
+
         body {
             font-family: monospace;
             font-size: large;
@@ -87,19 +116,17 @@
 
         #editor {
             padding: 30px;
-            /* box-shadow: 0 0 8px gray; */
+        }
+
+        #result {
+            height: 20vh;
+            background-color: lightgray;
+            border: 1px solid black;
         }
 
         .list {
             background-color: aliceblue;
             border: 1px solid blue;
-        }
-
-        button, .list, .atom, .data {
-            display: inline-block;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 2px;
         }
 
         .data {
