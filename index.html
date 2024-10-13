@@ -11,35 +11,16 @@
     <body>
         <div id="title">
             <h1>Lolisp</h1>
-            <button onclick="run_lolisp()">Run</button>
+            <button onclick="run_lolisp()">▶️</button>
         </div>
         
-        <div id="pallet" contenteditable="true">
-            <div class="list">
-                <div class="atom">&ThickSpace;</div>
-                <div class="atom">&ThickSpace;</div>
-                <span>&ThickSpace;</span>
-            </div>
-            <span>&ThickSpace;</span>
-
-            <div class="data"> 
-                <div class="atom">&ThickSpace;</div>
-                <div class="atom">&ThickSpace;</div>
-                <span>&ThickSpace;</span>
-            </div>
-            <span>&ThickSpace;</span>
-
-            <div class="atom">&ThickSpace;</div>
-            <span>&ThickSpace;</span>
-        </div>
-
         <div id="editor" contenteditable="true">
             <div class="list">
                 <div class="atom">define</div>
                 <div class="data">
                     <div class="atom">inc</div>
                     <div class="atom">n</div>
-                    <span>　</span>
+                    <span>&ThinSpace;</span>
                 </div>
                 <div class="data">
                     <div class="atom">+</div>
@@ -47,14 +28,14 @@
                     <div class="atom">1</div>
                     <span>　</span>
                 </div>
-                <span>　</span>
+                <span>&ThinSpace;</span>
             </div>
             <div class="list">
                 <div class="atom">inc</div>
                 <div class="atom">5</div>
-                <span>　</span>
+                <span>&ThinSpace;</span>
             </div>
-            <span>　</span>
+            <span>&ThinSpace;</span>
         </div>
         <br>
 
@@ -63,6 +44,8 @@
     </body>
 
     <script>
+        var pallet;
+
         function run_lolisp() {
             let gradia = new Gradia();
             let editor = document.getElementById("editor");
@@ -102,16 +85,25 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("editor").focus()
+            pallet = document.getElementById("pallet").innerHTML;
+            document.getElementById("editor").focus();
         })
     </script>
 
     <style>
-        #result, button, .list, .atom, .data, h1, #title, #editor  {
+        #result, button, .list, .atom, .data, h1, #title, #editor, #pallet  {
             display: inline-block;
             border-radius: 10px;
             padding: 10px;
             margin: 2px;
+        }
+
+        #pallet {
+            display: inline; 
+        }
+
+        #pallet:focus {
+            outline: none;
         }
 
         #title {
@@ -121,23 +113,21 @@
         }
         #title h1 {
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            margin-right: 63vw;
-            padding-top: -5px;
-            padding-bottom: 5px;
             height: 50px;
         }
+
+
 
         span, #title h1  {
             color: darkslategrey;
         }
 
         #title button {
+            background-color: transparent;
             padding: 0;
-            margin: 0;
-            height: 50px;
-            width: 100px;
-
-            border: 1px solid black;
+            margin-right: 1vh;
+            border-style: none;
+            font-size: 30px;
         }
 
         body {
