@@ -12,16 +12,22 @@
         <h1>Lolisp</h1>
         
 
-        <div id="editor">
+        <div id="editor" contenteditable="true">
             <div class="list">
-                <div class="atom">+</div>
-                <div class="atom">5</div>
-                <div class="list">
-                    <div class="atom">*</div>
-                    <div class="atom">2</div>
-                    <div class="atom">3</div>
+                <div class="atom">define</div>
+                <div class="data">
+                    <div class="atom">inc</div>
+                    <div class="atom">n</div>
                 </div>
-                <div class="atom">-1</div>
+                <div class="data">
+                    <div class="atom">+</div>
+                    <div class="atom">n</div>
+                    <div class="atom">1</div>
+                </div>
+            </div>
+            <div class="list">
+                <div class="atom">inc</div>
+                <div class="atom">5</div>
             </div>
         </div><br>
 
@@ -33,15 +39,17 @@
         function run_lolisp() {
             let gradia = new Gradia();
             let editor = document.getElementById("editor");
-            let source = editor.firstElementChild;
+            let source = editor.children;
 
-            code = compile(source);
-            console.log(code);
+            for (let line of source) {
+                code = compile(line);
+                console.log(code);
 
-            let result = gradia.eval(code);
-            if (result != "") {
-                let elm = document.getElementById("result");
-                elm.innerHTML = result;
+                let result = gradia.eval(code);
+                if (result != "") {
+                    let elm = document.getElementById("result");
+                    elm.innerHTML = result;
+                }
             }
         }
 
@@ -54,16 +62,32 @@
                     list.push(compile(item));
                 }
                 return `(${list.join(" ")})`
+            } else if (source.className == "data") {
+                let list = [];
+                let children = source.children;
+                for (let item of children) {
+                    list.push(compile(item));
+                }
+                return `'(${list.join(" ")})`
             } else if (source.className == "atom") {
                 return source.innerText;
             }
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("editor").focus()
+        })
     </script>
 
     <style>
         body {
             font-family: monospace;
             font-size: large;
+        }
+
+        #editor {
+            padding: 30px;
+            /* box-shadow: 0 0 8px gray; */
         }
 
         .list {
@@ -73,6 +97,15 @@
 
             background-color: aliceblue;
             border: 1px solid blue;
+        }
+
+        .data {
+            display: inline-block;
+            padding: 10px;
+            margin: 2px;
+
+            background-color: rgb(195, 239, 195);
+            border: 1px solid green;
         }
 
         .atom {
