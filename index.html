@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Lolisp</title>
+        <script
+            src="https://gradia-lang.github.io/gradia.js"
+            type="module"
+        ></script>
+    </head>
+
+    <body>
+        <h1>Lolisp</h1>
+        
+
+        <div id="editor">
+            <div class="list">
+                <div class="atom">+</div>
+                <div class="atom">5</div>
+                <div class="list">
+                    <div class="atom">*</div>
+                    <div class="atom">2</div>
+                    <div class="atom">3</div>
+                </div>
+                <div class="atom">-1</div>
+            </div>
+        </div><br>
+
+        <button onclick="run_lolisp()">Run</button>
+        <p id="result"></p>
+    </body>
+
+    <script>
+        function run_lolisp() {
+            let gradia = new Gradia();
+            let editor = document.getElementById("editor");
+            let source = editor.firstElementChild;
+
+            code = compile(source);
+            console.log(code);
+
+            let result = gradia.eval(code);
+            if (result != "") {
+                let elm = document.getElementById("result");
+                elm.innerHTML = result;
+            }
+        }
+
+        function compile(source) {
+            source.setAttribute("contenteditable", true);
+            if (source.className == "list") {
+                let list = [];
+                let children = source.children;
+                for (let item of children) {
+                    list.push(compile(item));
+                }
+                return `(${list.join(" ")})`
+            } else if (source.className == "atom") {
+                return source.innerText;
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: monospace;
+            font-size: large;
+        }
+
+        .list {
+            display: inline-block;
+            padding: 10px;
+            margin: 2px;
+
+            background-color: aliceblue;
+            border: 1px solid blue;
+        }
+
+        .atom {
+            display: inline-block;
+            padding: 10px;
+            margin: 2px;
+
+            background-color: whitesmoke;
+            border: 1px solid black;
+        }
+    </style>
+</html>
