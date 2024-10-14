@@ -15,24 +15,24 @@
         </div>
         
         <div id="editor" contenteditable="true">
-            <div class="list">
-                <div class="atom">define</div>
-                <div class="data">
-                    <div class="atom">inc</div>
-                    <div class="atom">n</div>
+            <div class="expr">
+                <div class="function">define</div>
+                <div class="list">
+                    <div class="symbol">inc</div>
+                    <div class="number">n</div>
                     <span>&ThinSpace;</span>
                 </div>
-                <div class="data">
-                    <div class="atom">+</div>
-                    <div class="atom">n</div>
-                    <div class="atom">1</div>
+                <div class="list">
+                    <div class="function">+</div>
+                    <div class="number">n</div>
+                    <div class="number">1</div>
                     <span>　</span>
                 </div>
                 <span>&ThinSpace;</span>
             </div>
-            <div class="list">
-                <div class="atom">inc</div>
-                <div class="atom">5</div>
+            <div class="expr">
+                <div class="function">inc</div>
+                <div class="string">5</div>
                 <span>&ThinSpace;</span>
             </div>
             <span>&ThinSpace;</span>
@@ -59,28 +59,33 @@
 
                 console.log(code);
                 let result = gradia.eval(code);
-                document.getElementById("result").innerHTML = result;
+                if (result.trim() != "") {
+                    document.getElementById("result").innerHTML = result;
+                }
             }
         }
 
         function compile(source) {
-            source.setAttribute("contenteditable", true);
-            if (source.className == "list") {
+            let inner = source.innerText;
+            if (source.className == "expr" || source.className == "list") {
                 let list = [];
                 let children = source.children;
                 for (let item of children) {
-                    list.push(compile(item));
+                    let output = compile(item);
+                    if (output != null) {
+                        list.push(output);
+                    }    
                 }
-                return `(${list.join(" ")})`
-            } else if (source.className == "data") {
-                let list = [];
-                let children = source.children;
-                for (let item of children) {
-                    list.push(compile(item));
-                }
-                return `'(${list.join(" ")})`
-            } else if (source.className == "atom") {
-                return source.innerText;
+                return `${ (source.className == "list") ? "'" : "" }(${list.join(" ")})`
+            } else if (source.className == "string") {
+                return `"${inner}"`;
+            } else if (
+                source.className == "function" || 
+                source.className == "symbol" || 
+                source.className == "number" || 
+                source.className == "bool"
+            ) {
+                return inner.trim();
             } else {
                 return null;
             }
@@ -92,7 +97,7 @@
     </script>
 
     <style>
-        #result, button, .list, .atom, .data, h1, #title, #editor, #pallet  {
+        #result, button, .list, .symbol, .number, .string, .bool, .expr, .function, h1, #title, #editor, #pallet  {
             display: inline-block;
             border-radius: 10px;
             padding: 10px;
@@ -148,19 +153,39 @@
             border: 1px solid black;
         }
 
-        .list {
+        .expr {
             background-color: aliceblue;
             border: 1px solid blue;
         }
 
-        .data {
+        .list {
             background-color: rgb(195, 239, 195);
             border: 1px solid green;
         }
 
-        .atom {
-            background-color: whitesmoke;
+        .symbol {
+            background-color:lemonchiffon;
+            border: 1px solid rgb(202, 202, 7);
+        }
+
+        .number {
+            background-color:whitesmoke;
             border: 1px solid black;
+        }
+
+        .string {
+            background-color:rgb(240, 221, 185);
+            border: 1px solid orange;
+        }
+
+        .bool {
+            background-color:rgb(169, 232, 232);
+            border: 1px solid cyan;
+        }
+
+        .function {
+            background-color: rgb(247, 213, 247);
+            border: 1px solid purple;
         }
     </style>
 </html>
