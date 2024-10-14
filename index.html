@@ -69,7 +69,7 @@
 
         function save() {
             let text =  document.getElementById("editor").innerHTML;
-            let blob = new Blob([text], { type: 'text/plain' });
+            let blob = new Blob([text], { type: 'text/html' });
             let url = URL.createObjectURL(blob);
 
             let a = document.createElement('a');
