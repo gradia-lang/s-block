@@ -19,20 +19,20 @@
                 <div class="function">define</div>
                 <div class="list">
                     <div class="symbol">inc</div>
-                    <div class="number">n</div>
+                    <div class="symbol">n</div>
                     <span>&ThinSpace;</span>
                 </div>
                 <div class="list">
                     <div class="function">+</div>
-                    <div class="number">n</div>
-                    <div class="number">1</div>
+                    <div class="symbol">n</div>
+                    <div class="atom">1</div>
                     <span>　</span>
                 </div>
                 <span>&ThinSpace;</span>
             </div>
             <div class="expr">
                 <div class="function">inc</div>
-                <div class="string">5</div>
+                <div class="atom">5</div>
                 <span>&ThinSpace;</span>
             </div>
             <span>&ThinSpace;</span>
@@ -67,24 +67,29 @@
 
         function compile(source) {
             let inner = source.innerText;
+            let trimed = inner.trim();
             if (source.className == "expr" || source.className == "list") {
                 let list = [];
                 let children = source.children;
                 for (let item of children) {
                     let output = compile(item);
-                    if (output != null) {
+                    if (output !== null) {
                         list.push(output);
                     }    
                 }
                 return `${ (source.className == "list") ? "'" : "" }(${list.join(" ")})`
-            } else if (source.className == "string") {
-                return `"${inner}"`;
-            } else if (
-                source.className == "function" || 
-                source.className == "symbol" || 
-                source.className == "number" || 
-                source.className == "bool"
-            ) {
+            } else if (source.className == "symbol") {
+                return trimed;
+            } else if (source.className == "function") {
+                return `${trimed}:function`;
+            } else if (source.className == "atom") {
+                if (trimed == "true" || trimed == "false") {
+                    return `${trimed}:bool`;
+                } else if (!isNaN(parseFloat(trimed))) {
+                    return `${trimed}:number`;
+                } else {
+                    return `"${trimed}":string`;
+                }
                 return inner.trim();
             } else {
                 return null;
@@ -97,7 +102,7 @@
     </script>
 
     <style>
-        #result, button, .list, .symbol, .number, .string, .bool, .expr, .function, h1, #title, #editor, #pallet  {
+        #result, button, .list, .symbol, .atom, .expr, .function, h1, #title, #editor, #pallet  {
             display: inline-block;
             border-radius: 10px;
             padding: 10px;
@@ -163,24 +168,14 @@
             border: 1px solid green;
         }
 
-        .symbol {
+        .atom {
             background-color:lemonchiffon;
             border: 1px solid rgb(202, 202, 7);
         }
 
-        .number {
+        .symbol {
             background-color:whitesmoke;
             border: 1px solid black;
-        }
-
-        .string {
-            background-color:rgb(240, 221, 185);
-            border: 1px solid orange;
-        }
-
-        .bool {
-            background-color:rgb(169, 232, 232);
-            border: 1px solid cyan;
         }
 
         .function {
