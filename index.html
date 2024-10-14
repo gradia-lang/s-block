@@ -12,6 +12,8 @@
         <div id="title">
             <h1>Lolisp</h1>
             <button onclick="run_lolisp()">▶️</button>
+            <button onclick="load_lolisp()">📄</button>
+            <button onclick="save_lolisp()">💾</button>
         </div>
         
         <div id="editor" contenteditable="true">
@@ -65,6 +67,41 @@
             }
         }
 
+        function save_lolisp() {
+            let text =  document.getElementById("editor").innerHTML;
+            let blob = new Blob([text], { type: 'text/plain' });
+            let url = URL.createObjectURL(blob);
+
+            let a = document.createElement('a');
+            a.href = url; a.download = "lolisp.html";
+            document.body.appendChild(a);
+            a.click();
+
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function load_lolisp() {
+            const input = document.createElement('input');
+            input.type = 'file';　input.accept = 'text/html'; 
+
+            input.addEventListener('change', function(event) {
+                const file = event.target.files[0];  
+                if (file) {
+                    const reader = new FileReader(); 
+                    reader.onload = function(e) {
+                        const fileContent = e.target.result; 
+                        console.log(fileContent);
+                        document.getElementById("editor").innerHTML = fileContent;
+                    };
+                    reader.readAsText(file, 'UTF-8');
+                }
+            });
+            input.click();
+        }
+
+
+
         function compile(source) {
             let inner = source.innerText;
             let trimed = inner.trim();
@@ -90,7 +127,6 @@
                 } else {
                     return `"${trimed}":string`;
                 }
-                return inner.trim();
             } else {
                 return null;
             }
