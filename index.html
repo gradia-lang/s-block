@@ -53,13 +53,13 @@
 
             for (let line of source) {
                 code = compile(line);
-                console.log(code);
-
-                let result = gradia.eval(code);
-                if (result != "") {
-                    let elm = document.getElementById("result");
-                    elm.innerHTML = result;
+                if (code === null) {
+                    continue
                 }
+
+                console.log(code);
+                let result = gradia.eval(code);
+                document.getElementById("result").innerHTML = result;
             }
         }
 
@@ -81,6 +81,8 @@
                 return `'(${list.join(" ")})`
             } else if (source.className == "atom") {
                 return source.innerText;
+            } else {
+                return null;
             }
         }
 
