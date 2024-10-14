@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Lolisp</title>
+        <title>S-Block</title>
         <script
             src="https://gradia-lang.github.io/gradia.js"
             type="module"
@@ -10,10 +10,10 @@
 
     <body>
         <div id="title">
-            <h1>Lolisp</h1>
-            <button onclick="run_lolisp()">▶️</button>
-            <button onclick="load_lolisp()">📄</button>
-            <button onclick="save_lolisp()">💾</button>
+            <h1>S-Block</h1>
+            <button onclick="run()">▶️</button>
+            <button onclick="load()">📄</button>
+            <button onclick="save()">💾</button>
         </div>
         
         <div id="editor" contenteditable="true">
@@ -48,7 +48,7 @@
     <script>
         var pallet;
 
-        function run_lolisp() {
+        function run() {
             let gradia = new Gradia();
             let editor = document.getElementById("editor");
             let source = editor.children;
@@ -67,13 +67,13 @@
             }
         }
 
-        function save_lolisp() {
+        function save() {
             let text =  document.getElementById("editor").innerHTML;
             let blob = new Blob([text], { type: 'text/plain' });
             let url = URL.createObjectURL(blob);
 
             let a = document.createElement('a');
-            a.href = url; a.download = "lolisp.html";
+            a.href = url; a.download = "s_block.html";
             document.body.appendChild(a);
             a.click();
 
@@ -81,7 +81,7 @@
             URL.revokeObjectURL(url);
         }
 
-        function load_lolisp() {
+        function load() {
             const input = document.createElement('input');
             input.type = 'file';　input.accept = 'text/html'; 
 
@@ -154,8 +154,6 @@
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             height: 50px;
         }
-
-
 
         span, #title h1  {
             color: darkslategrey;
