@@ -171,4 +171,20 @@ function reverse(code) {
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("editor").focus();
     addTips();
+
+    let run_button = document.getElementById("run");
+    addTipsSub(run_button, "Run this program");
+    run_button.onclick = run;
+
+    let build_button = document.getElementById("build");
+    addTipsSub(build_button, "Build to show the code");
+    build_button.onclick = build;
+
+    let load_button = document.getElementById("load");
+    addTipsSub(load_button, "Load program from file");
+    load_button.onclick = load;
+
+    let save_button = document.getElementById("save");
+    addTipsSub(save_button, "Save this as file");
+    save_button.onclick = save;
 });
