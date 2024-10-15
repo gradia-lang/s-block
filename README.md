@@ -1,2 +1,2 @@
 # S-Block
-<img width="958" alt="image" src="https://github.com/user-attachments/assets/7a07e747-6ec1-40aa-9994-125de3642ad2">
+![image](https://github.com/user-attachments/assets/da55070d-00c4-4ab7-b50f-3688ee2d8f59)
