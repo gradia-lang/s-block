@@ -34,13 +34,18 @@ p, #title h1  {
     font-size: 35px;
 }
 
-body {
+#main {
     padding: 2vh;
+    overflow: hidden;
+}
+
+body {
     font-family: monospace;
     font-size: large;
     user-select: none;
+
     height: 100vh;
-    overflow: hidden;
+    padding: 0; margin: 0;
     background: linear-gradient(to bottom, white, aliceblue);
 }
 
