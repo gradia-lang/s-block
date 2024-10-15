@@ -18,7 +18,7 @@ function run() {
     }
 }
 
-function addTips() {
+function addTipsEditor() {
     let target = {
         function: "Function to be called",
         expr: "List of expression to be evaluated",
@@ -29,12 +29,12 @@ function addTips() {
     for (let [name, tip] of Object.entries(target)) {
         let functions = document.querySelectorAll(`.${name}`);
         for (let item of functions) {
-            addTipsSub(item, tip)
+            addTips(item, tip)
         }
     }
 }
 
-function addTipsSub(button, tip) {
+function addTips(button, tip) {
     function createTooltip(text) {
         const tooltip = document.createElement('div');
         tooltip.classList.add('tooltip');
@@ -171,22 +171,23 @@ function reverse(code) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("editor").focus();
-    addTips();
+    let editor =  document.getElementById("editor");
+    editor.addEventListener("mousemove", addTipsEditor);
+    editor.focus();
 
     let run_button = document.getElementById("run");
-    addTipsSub(run_button, "Run this program");
+    addTips(run_button, "Run this program");
     run_button.onclick = run;
 
     let build_button = document.getElementById("build");
-    addTipsSub(build_button, "Build to show the code");
+    addTips(build_button, "Build to show the code");
     build_button.onclick = build;
 
     let load_button = document.getElementById("load");
-    addTipsSub(load_button, "Load program from file");
+    addTips(load_button, "Load program from file");
     load_button.onclick = load;
 
     let save_button = document.getElementById("save");
-    addTipsSub(save_button, "Save this as file");
+    addTips(save_button, "Save this as file");
     save_button.onclick = save;
 });
