@@ -43,6 +43,14 @@ function addTipsSub(button, tip) {
         return tooltip;
     }
 
+    function removeTooltip() {
+        const tooltip = document.querySelector('.tooltip');
+        if (tooltip) {
+            tooltip.classList.remove('show');
+            tooltip.remove();
+        }
+    };
+
     button.addEventListener("mouseenter", function() {
         let others = document.querySelectorAll(".tooltip");
         for (let other of others) {
@@ -55,15 +63,11 @@ function addTipsSub(button, tip) {
         tooltip.style.left = `${rect.left + window.scrollX + rect.width / 2}px`;
         tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight}px`;
         tooltip.classList.add('show');
+
+        setTimeout(removeTooltip, 5000);
     });
 
-    button.addEventListener("mouseleave", function() {
-        const tooltip = document.querySelector('.tooltip');
-        if (tooltip) {
-            tooltip.classList.remove('show');
-            tooltip.remove();
-        }
-    });
+    button.addEventListener("mouseleave", removeTooltip);
 }
 
 function build() {
