@@ -62,9 +62,7 @@ function addTipsSub(button, tip) {
 
         tooltip.style.left = `${rect.left + window.scrollX + rect.width / 2}px`;
         tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight}px`;
-        tooltip.classList.add('show');
-
-        setTimeout(removeTooltip, 5000);
+        setTimeout(function() {tooltip.classList.add('show');}, 1000);
     });
 
     button.addEventListener("mouseleave", removeTooltip);
