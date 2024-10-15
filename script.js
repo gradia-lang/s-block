@@ -12,8 +12,7 @@ function run() {
         let result = gradia.eval(code);
         if (result.trim() != "") {
             let area = document.getElementById("result");
-            area.innerHTML = "";
-            area.appendChild(reverse(result));
+            area.innerHTML = ""; area.appendChild(reverse(result));
         }
     }
 }
@@ -27,7 +26,7 @@ function addTipsEditor() {
         atom: "Atom: any value includes string, number and bool"
     };
     for (let [name, tip] of Object.entries(target)) {
-        let functions = document.querySelectorAll(`.${name}`);
+        let functions = document.getElementById("editor").querySelectorAll(`.${name}`);
         for (let item of functions) {
             addTips(item, tip)
         }
@@ -81,7 +80,9 @@ function build() {
     }
 
     let elm = document.createElement("div");
-    elm.className = "symbol"; elm.innerHTML = result.join("<br>");
+    elm.innerHTML = result.join("<br>");
+    elm.style.userSelect = "text";
+    elm.className = "symbol"; 
 
     let area = document.getElementById("result");
     area.innerHTML = ""; area.appendChild(elm);
