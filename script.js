@@ -18,6 +18,54 @@ function run() {
     }
 }
 
+function addTips() {
+    let target = {
+        function: "Function to be called",
+        expr: "List of expression to be evaluated",
+        list: "List as data to be processed",
+        symbol: "Symbol includes variable, function name and its paramater",
+        atom: "Atom: any value includes string, number and bool"
+    };
+    for (let [name, tip] of Object.entries(target)) {
+        let functions = document.querySelectorAll(`.${name}`);
+        for (let item of functions) {
+            addTipsSub(item, tip)
+        }
+    }
+}
+
+function addTipsSub(button, tip) {
+    function createTooltip(text) {
+        const tooltip = document.createElement('div');
+        tooltip.classList.add('tooltip');
+        tooltip.textContent = text;
+        document.body.appendChild(tooltip);
+        return tooltip;
+    }
+
+    button.addEventListener("mouseenter", function() {
+        let others = document.querySelectorAll(".tooltip");
+        for (let other of others) {
+            other.remove()
+        }
+
+        const tooltip = createTooltip(tip);
+        const rect = button.getBoundingClientRect();
+
+        tooltip.style.left = `${rect.left + window.scrollX + rect.width / 2}px`;
+        tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight}px`;
+        tooltip.classList.add('show');
+    });
+
+    button.addEventListener("mouseleave", function() {
+        const tooltip = document.querySelector('.tooltip');
+        if (tooltip) {
+            tooltip.classList.remove('show');
+            tooltip.remove();
+        }
+    });
+}
+
 function build() {
     let editor = document.getElementById("editor");
     let source = editor.children;
@@ -122,4 +170,5 @@ function reverse(code) {
 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("editor").focus();
+    addTips();
 });
