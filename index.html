@@ -8,42 +8,44 @@
     </head>
 
     <body>
-        <div id="title">
-            <h1>S-Block</h1>
-            <button onclick="run()">▶️</button>
-            <button onclick="build()">🔨</button>
-            <button onclick="load()">📄</button>
-            <button onclick="save()">💾</button>
-        </div>
-        
-        <div id="editor" contenteditable="true">
-            <div class="expr">
-                <div class="function">define</div>
-                <div class="list">
-                    <div class="symbol">inc</div>
-                    <div class="symbol">n</div>
+        <div id="main">
+            <div id="title">
+                <h1>S-Block</h1>
+                <button onclick="run()">▶️</button>
+                <button onclick="build()">🔨</button>
+                <button onclick="load()">📄</button>
+                <button onclick="save()">💾</button>
+            </div>
+            
+            <div id="editor" contenteditable="true">
+                <div class="expr">
+                    <div class="function">define</div>
+                    <div class="list">
+                        <div class="symbol">inc</div>
+                        <div class="symbol">n</div>
+                        <span>&ThinSpace;</span>
+                    </div>
+                    <div class="list">
+                        <div class="function">+</div>
+                        <div class="symbol">n</div>
+                        <div class="atom">1</div>
+                        <span>&ThinSpace;</span>
+                    </div>
                     <span>&ThinSpace;</span>
                 </div>
-                <div class="list">
-                    <div class="function">+</div>
-                    <div class="symbol">n</div>
-                    <div class="atom">1</div>
+                <div class="expr">
+                    <div class="function">inc</div>
+                    <div class="atom">5</div>
                     <span>&ThinSpace;</span>
                 </div>
                 <span>&ThinSpace;</span>
             </div>
-            <div class="expr">
-                <div class="function">inc</div>
-                <div class="atom">5</div>
-                <span>&ThinSpace;</span>
-            </div>
-            <span>&ThinSpace;</span>
-        </div>
-        <br>
+            <br>
 
-        <div class="container">
-            <p>↪︎</p>
-            <pre id="result">&ThinSpace;</pre>
+            <div class="container">
+                <p>↪︎</p>
+                <pre id="result">&ThinSpace;</pre>
+            </div>
         </div>
     </body>
 </html>
