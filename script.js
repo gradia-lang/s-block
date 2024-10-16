@@ -12,59 +12,11 @@ function run() {
         let result = gradia.eval(code);
         if (result.trim() != "") {
             let area = document.getElementById("result");
-            area.innerHTML = ""; area.appendChild(reverse(result));
+            area.innerHTML = ""; let elm = reverse(result);
+            addTips(elm, "Result of evaluate this program");
+            area.appendChild(elm);
         }
     }
-}
-
-function addTipsEditor() {
-    let target = {
-        function: "Function to be called",
-        expr: "List of expression to be evaluated",
-        list: "List as data to be processed",
-        symbol: "Symbol includes variable, function name and its paramater",
-        atom: "Atom: any value includes string, number and bool"
-    };
-    for (let [name, tip] of Object.entries(target)) {
-        let functions = document.getElementById("editor").querySelectorAll(`.${name}`);
-        for (let item of functions) {
-            addTips(item, tip)
-        }
-    }
-}
-
-function addTips(button, tip) {
-    function createTooltip(text) {
-        const tooltip = document.createElement('div');
-        tooltip.classList.add('tooltip');
-        tooltip.textContent = text;
-        document.body.appendChild(tooltip);
-        return tooltip;
-    }
-
-    function removeTooltip() {
-        const tooltip = document.querySelector('.tooltip');
-        if (tooltip) {
-            tooltip.classList.remove('show');
-            tooltip.remove();
-        }
-    };
-
-    button.addEventListener("mouseenter", function() {
-        let others = document.querySelectorAll(".tooltip");
-        for (let other of others) {
-            other.remove()
-        }
-
-        const tooltip = createTooltip(tip);
-        const rect = button.getBoundingClientRect();
-
-        tooltip.style.left = `${rect.left + window.scrollX + rect.width / 2}px`;
-        tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight}px`;
-        setTimeout(function() {tooltip.classList.add('show');}, 1000);
-    });
-
-    button.addEventListener("mouseleave", removeTooltip);
 }
 
 function build() {
@@ -83,6 +35,7 @@ function build() {
     elm.innerHTML = result.join("<br>");
     elm.style.userSelect = "text";
     elm.className = "symbol"; 
+    addTips(elm, "Gradia code transpiled from the block");
 
     let area = document.getElementById("result");
     area.innerHTML = ""; area.appendChild(elm);
@@ -171,9 +124,74 @@ function reverse(code) {
     return result;
 }
 
+
+function addTipsEditor() {
+    let target = {
+        function: "Function to be called",
+        expr: "List of expression to be evaluated",
+        list: "List as data to be processed",
+        symbol: "Symbol includes variable, function name and its paramater",
+        atom: "Atom: any value includes string, number and bool"
+    };
+    for (let [name, tip] of Object.entries(target)) {
+        let functions = document.getElementById("editor").querySelectorAll(`.${name}`);
+        for (let item of functions) {
+            addTips(item, tip)
+        }
+    }
+}
+
+function addTips(button, tip) {
+    function createTooltip(text) {
+        const tooltip = document.createElement('div');
+        tooltip.classList.add('tooltip');
+        tooltip.textContent = text;
+        document.body.appendChild(tooltip);
+        return tooltip;
+    }
+
+    function removeTooltip() {
+        const tooltip = document.querySelector('.tooltip');
+        if (tooltip) {
+            tooltip.classList.remove('show');
+            tooltip.remove();
+        }
+    };
+
+    button.addEventListener("mouseenter", function() {
+        let others = document.querySelectorAll(".tooltip");
+        for (let other of others) {
+            other.remove()
+        }
+
+        const tooltip = createTooltip(tip);
+        const rect = button.getBoundingClientRect();
+
+        tooltip.style.left = `${rect.left + window.scrollX + rect.width / 2}px`;
+        tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight}px`;
+        setTimeout(function() {tooltip.classList.add('show');}, 1000);
+    });
+
+    button.addEventListener("mouseleave", removeTooltip);
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     let editor =  document.getElementById("editor");
-    editor.addEventListener("mousemove", addTipsEditor);
+    editor.addEventListener("mousemove", function() {
+        let target = {
+            function: "Function to be called",
+            expr: "List of expression to be evaluated",
+            list: "List as data to be processed",
+            symbol: "Symbol includes variable, function name and its paramater",
+            atom: "Atom: any value includes string, number and bool"
+        };
+        for (let [name, tip] of Object.entries(target)) {
+            let functions = document.getElementById("editor").querySelectorAll(`.${name}`);
+            for (let item of functions) {
+                addTips(item, tip)
+            }
+        }
+    });
     editor.focus();
 
     let run_button = document.getElementById("run");
